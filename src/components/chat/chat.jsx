@@ -1,24 +1,33 @@
 import React, { Component } from 'react';
+import Fire from '../../fire'
 import Mes from './mes'
 import './chat.css'
+
 
 class Chat extends Component {
     constructor(props){
         super(props)
         this.state = { 
-            messages:[]
+            messages: []
         }
         this.addToState = this.addToState.bind(this)
         this.removeFromState = this.removeFromState.bind(this)
-         
     }
+ 
     addToState(mes){
-        let previousMessages = this.state.messages
-        previousMessages.push({
-            Key: previousMessages.length,
-            User: 'Evan',
-            Mes: mes
-        })
+         // Previous
+         let previousMessages = this.state.messages
+         previousMessages.push({
+             Key: previousMessages.length,
+             User: 'Evan',
+             Mes: mes
+         })
+
+        // FireBase 
+        Fire.shared.addMes(previousMessages.length,'Evan',mes)
+        const arr = Fire.shared.readMes()
+
+        // State
         this.setState({
             messages : previousMessages
         })
@@ -37,7 +46,7 @@ class Chat extends Component {
 
     render() { 
         return ( 
-            <div id='chat'>
+            <div id='chat' >
                 <div id='chatboxContainer' className="form-control">
                     {
                         this.state.messages.map((content) => 
