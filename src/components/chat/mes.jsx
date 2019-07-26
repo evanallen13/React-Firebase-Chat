@@ -9,8 +9,8 @@ class Mes extends Component {
          }
         this.removeMes = this.removeMes.bind(this)
     }
-    removeMes(){
-        console.log(this.state.Key)
+    removeMes(id){
+        this.props.removeFromState(id)
     }
     render(props) { 
         return ( 
@@ -20,7 +20,7 @@ class Mes extends Component {
                         className='removeX'
                         key={this.props.Key}
                         onClick={()=>
-                            this.removeMes()
+                            this.removeMes(this.props.Id)
                         }
                     >&times;</span>
                     {this.props.User} : {this.props.Mes}

@@ -36,7 +36,6 @@
 @media only screen and (max-width: 1300px) {
     #chat{
         padding-top: 5vh;
-        background-image:  url(../../imgs/thousand.jpg);
     }
     #chatboxContainer{
         height: 80vh;
