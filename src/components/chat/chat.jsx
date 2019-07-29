@@ -19,7 +19,7 @@ class Chat extends Component {
          let previousMessages = this.state.messages
          previousMessages.push({
              Key: previousMessages.length,
-             User: 'Evan',
+             User: this.props.User,
              Mes: mes
          })
 

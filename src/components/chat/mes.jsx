@@ -1,10 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
+import firebase from 'firebase'
 
 
 const Mes = () => ({
     render(props) { 
         return ( 
-            <div className="message">
+            <div className = {this.props.User === firebase.auth().currentUser.email ? 'User message' : 'NotUser message' }>
                 <h6>
                     <span 
                         className='removeX'
@@ -19,5 +20,4 @@ const Mes = () => ({
          );
     }
 })
- 
 export default Mes;

@@ -1,19 +1,37 @@
 import React, { Component } from 'react';
 import './App.css';
-import Main from './components/main/main'
 import Chat from './components/chat/chat'
+import firebase from 'firebase'
+
+let userCurrent;
 
 class App extends Component {
-  state = { 
-    User: null
-   }
+  constructor(props){
+    super(props)
+    this.state = {
+      User: null
+    }
+  }
   render() { 
     return ( 
       <div className='App'>
-        {this.state.User ? (<Chat></Chat>) : (<Main></Main>)}
+        {firebase.auth().currentUser ?(
+            <Chat
+            User = {this.state.User}
+            ></Chat>) : (
+          <div id="login">
+            <h1> Please Login </h1>
+            <button id='googleLogin' onClick={() => 
+              this.setState({
+                User: firebase.auth().currentUser.email
+              })
+          }>Google Login</button>
+          </div>)}
       </div>
      );
   }
+
 }
+
  
 export default App;
