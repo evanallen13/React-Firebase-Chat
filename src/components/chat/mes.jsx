@@ -1,17 +1,7 @@
 import React, { Component } from 'react';
 
-class Mes extends Component {
 
-    constructor(props){
-        super(props)
-        this.state = { 
-            Key: 'eekek'
-         }
-        this.removeMes = this.removeMes.bind(this)
-    }
-    removeMes(id){
-        this.props.removeFromState(id)
-    }
+const Mes = () => ({
     render(props) { 
         return ( 
             <div className="message">
@@ -20,7 +10,7 @@ class Mes extends Component {
                         className='removeX'
                         key={this.props.Key}
                         onClick={()=>
-                            this.removeMes(this.props.Id)
+                            this.props.removeFromState(this.props.Id)
                         }
                     >&times;</span>
                     {this.props.User} : {this.props.Mes}
@@ -28,6 +18,6 @@ class Mes extends Component {
             </div>
          );
     }
-}
+})
  
 export default Mes;

@@ -1,9 +1,3 @@
-#chat{
-    height: 100vh;
-    width: 100vw;
-    background-image:  url(../../imgs/mammoth.jpg);
-    padding-top: 10vh;
-}
 #chatboxContainer{
     height: 50vh;
     width: 30vw;
