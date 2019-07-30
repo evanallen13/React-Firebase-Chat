@@ -3,29 +3,41 @@ import './App.css';
 import Chat from './components/chat/chat'
 import firebase from 'firebase'
 
-let userCurrent;
-
 class App extends Component {
   constructor(props){
     super(props)
     this.state = {
-      User: null
-    }
+      LoggedIn : false
+    };
+    this.firebaseAuth = this.firebaseAuth.bind(this)
+    this.Login = this.Login.bind(this)
   }
+  
+  Login(){
+    this.setState({
+      LoggedIn : true
+    })
+  }
+  
+  firebaseAuth = () => {
+    var provider = new firebase.auth.GoogleAuthProvider();
+    firebase.auth().signInWithPopup(provider)
+    this.Login()
+  }
+
   render() { 
     return ( 
       <div className='App'>
-        {firebase.auth().currentUser ?(
+        {this.state.LoggedIn ?(
             <Chat
-            User = {this.state.User}
+            User = {firebase.auth().currentUser.displayName }
             ></Chat>) : (
           <div id="login">
             <h1> Please Login </h1>
             <button id='googleLogin' onClick={() => 
-              this.setState({
-                User: firebase.auth().currentUser.email
-              })
-          }>Google Login</button>
+            this.firebaseAuth()
+            }>Google Login</button>
+            <p>{firebase.auth().currentUser}</p>
           </div>)}
       </div>
      );

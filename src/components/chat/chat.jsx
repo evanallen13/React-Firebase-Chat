@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import Fire from '../../fire'
 import Mes from './mes'
+import firebase from 'firebase'
 import './chat.css'
-
 
 class Chat extends Component {
     constructor(props){
@@ -12,6 +12,7 @@ class Chat extends Component {
         }
         this.addToState = this.addToState.bind(this)
         this.removeFromState = this.removeFromState.bind(this)
+        this.readFromFirebase = this.readFromFirebase.bind(this)
     }
  
     addToState(mes){
@@ -25,7 +26,6 @@ class Chat extends Component {
 
         // FireBase 
         Fire.shared.addMes(previousMessages.length,'Evan',mes)
-        const arr = Fire.shared.readMes()
 
         // State
         this.setState({
@@ -43,10 +43,28 @@ class Chat extends Component {
             messages : previousMessages
         })
      }
+     readFromFirebase(){
+        let array = [];
+        const db = firebase.firestore();
+        const collection = db.collection('Messages')
+
+        collection.onSnapshot((doc) => {
+            doc.forEach(docs => {
+                array.push({
+                    Key : docs.data().Key,
+                    User : docs.data().User,
+                    Mes : docs.data().Mes
+                })
+            });
+        })
+        this.setState({
+            messages : array
+        })
+    }
 
     render() { 
         return ( 
-            <div id='chat' >
+            <div id='chat' onChange={()=> this.readFromFirebase()}>
                 <div id='chatboxContainer' className="form-control">
                     {
                         this.state.messages.map((content) => 
